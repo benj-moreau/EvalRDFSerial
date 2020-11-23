@@ -1,7 +1,6 @@
 from django.utils import html
 import six
 from six import StringIO
-import datetime
 
 DT_DATETIME = "http://www.w3.org/2001/XMLSchema#dateTime"
 
@@ -145,12 +144,8 @@ class DcatApCatalogExporter(XMLExporter):
         if metas.get('dcat.accrualperiodicity'):
              yield self.addEmptyElement("dct:accrualPeriodicity", {'rdf:resource': metas.get('dcat.accrualperiodicity')})
 
-        if 'vcard' in self.ns_keys and (contact_name or contact_email):
-            node_id = self.add_node(self.generate_dataset_contact_elem, contact_name=contact_name, contact_email=contact_email)
-            yield self.addEmptyElement('dcat:contactPoint', {'rdf:nodeID': node_id})
-
         # closing the dataset object
-            self.exit_element("dcat:Dataset")
+        self.exit_element("dcat:Dataset")
         yield self.get_buffer()
 
     def load_dataset_generator_params(self, dataset):
@@ -167,14 +162,9 @@ class DcatApCatalogExporter(XMLExporter):
 
     def catalog_generator(self, datasets):
         catalog_metas, catalog_lang, ns_attrs = self.load_catalog_generator_params()
-
-        self.enter_element("dcat:Catalog", ns_attrs)
-
         for dataset in datasets:
             for line in self.dataset_generator(dataset, catalog_metas):
                 yield line
-
-        self.exit_element("dcat:Catalog")
         yield self.get_buffer()
 
     def load_catalog_generator_params(self):
@@ -204,13 +194,6 @@ class DcatApCatalogExporter(XMLExporter):
             'args': kwargs
         }
         return cur_node_id
-
-    def generate_dataset_contact_elem(self, contact_name):
-        self.enter_element("dcat:contactPoint")
-        if contact_name:
-            yield self.addQuickElement("vcard:fn", contact_name)
-        self.exit_element()
-        yield self.get_buffer()
 
 
 def export(datasets):

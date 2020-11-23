@@ -6,9 +6,10 @@ NB_DATASETS = 20000
 
 def main():
     datasets = []
-    for i in range(1,NB_DATASETS):
+    for i in range(1,2):
         datasets.append(random_dataset())
-    export = print_rdf_exporter.export(datasets)
+    results = rdflib_rdf_exporter.export(datasets)
+    for res in results:
 
 
 if __name__ == "__main__":
