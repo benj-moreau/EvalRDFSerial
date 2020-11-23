@@ -15,7 +15,7 @@ class CatalogExporter():
             serialized_dataset = self.export_result(dataset)
             if n > 0:
                 yield self.output_separator()
-                serialized_dataset = serialized_dataset.replace(self.output_header(serialized_dataset), '', 1)
+                serialized_dataset = serialized_dataset.replace(self.output_header(serialized_dataset), b'', 1)
             if self.output_footer():
                 serialized_dataset = b''.join(serialized_dataset.rsplit(self.output_footer(), 1))
             yield serialized_dataset
