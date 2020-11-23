@@ -10,7 +10,7 @@ def random_dataset():
         "metas": {
             'default': {
                 "title": _random_str(),
-                "language": _random_str(),
+                "language": "en",
                 "modified": _random_date()
             },
             "dcat": {
@@ -19,7 +19,7 @@ def random_dataset():
                 "creator": _random_str(),
                 "contributor": _random_str(),
                 "contact_name": _random_str(),
-                "publisher_type": _random_str(),
+                "contact_email": _random_iri(),
                 "accrualperiodicity": _random_str()
             }
         }

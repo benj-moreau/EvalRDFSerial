@@ -1,8 +1,14 @@
 from utils.DatasetGenerator import random_dataset
+from utils import print_rdf_exporter, rdflib_rdf_exporter
+
+NB_DATASETS = 20000
 
 
 def main():
-    print(random_dataset())
+    datasets = []
+    for i in range(1,NB_DATASETS):
+        datasets.append(random_dataset())
+    export = print_rdf_exporter.export(datasets)
 
 
 if __name__ == "__main__":
